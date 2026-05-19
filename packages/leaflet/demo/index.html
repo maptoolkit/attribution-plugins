@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>@maptoolkit/leaflet-logo demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html, body, #map { margin: 0; padding: 0; height: 100%; }
+    body { font-family: system-ui, sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module">
+    import { MaptoolkitLogoControl } from '../dist/index.js';
+
+    const params = new URLSearchParams(location.search);
+    const position = params.get('position') ?? 'bottom-left';
+
+    const map = L.map('map').setView([20, 0], 2);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap',
+    }).addTo(map);
+
+    new MaptoolkitLogoControl({ position }).addTo(map);
+  </script>
+</body>
+</html>
