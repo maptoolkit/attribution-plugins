@@ -12,10 +12,10 @@ if (!target) {
   process.exit(1);
 }
 
-const svgPath = resolve(repoRoot, 'assets/logo.svg');
-const svg = readFileSync(svgPath);
-const base64 = svg.toString('base64');
-const dataUri = `data:image/svg+xml;base64,${base64}`;
+const pngPath = resolve(repoRoot, 'assets/logo.png');
+const png = readFileSync(pngPath);
+const base64 = png.toString('base64');
+const dataUri = `data:image/png;base64,${base64}`;
 
 const out = `// AUTO-GENERATED. Run \`npm run build:logo\` to regenerate.
 export const LOGO_DATA_URI = '${dataUri}';
