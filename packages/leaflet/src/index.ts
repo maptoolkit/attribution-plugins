@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import type { Map as LeafletMap } from 'leaflet';
 import { LOGO_DATA_URI } from './logo.generated';
 
 export type LogoPosition =
@@ -37,23 +37,23 @@ function positionStyle(position: LogoPosition): Partial<CSSStyleDeclaration> {
   }
 }
 
-export class MaptoolkitLogoControl extends L.Control {
-  private readonly _logoPosition: LogoPosition;
-  private _overlay: HTMLDivElement | null = null;
-  private readonly _stop = (e: Event) => e.stopPropagation();
+export class MaptoolkitLogoControl {
+  private readonly position: LogoPosition;
+  private overlay: HTMLDivElement | null = null;
+  private map: LeafletMap | null = null;
+  private readonly stop = (e: Event) => e.stopPropagation();
 
   constructor(options: MaptoolkitLogoOptions = {}) {
-    super({ position: 'bottomleft' });
-    this._logoPosition = options.position ?? 'bottom-left';
+    this.position = options.position ?? 'bottom-left';
   }
 
-  onAdd(map: L.Map): HTMLElement {
+  onAdd(map: LeafletMap): HTMLElement {
     const overlay = document.createElement('div');
-    overlay.className = `maptoolkit-logo-control maptoolkit-logo-${this._logoPosition}`;
+    overlay.className = `maptoolkit-logo-control maptoolkit-logo-${this.position}`;
     overlay.style.position = 'absolute';
     overlay.style.zIndex = '1000';
     overlay.style.pointerEvents = 'auto';
-    Object.assign(overlay.style, positionStyle(this._logoPosition));
+    Object.assign(overlay.style, positionStyle(this.position));
 
     const anchor = document.createElement('a');
     anchor.href = HREF;
@@ -69,24 +69,39 @@ export class MaptoolkitLogoControl extends L.Control {
     overlay.appendChild(anchor);
 
     for (const evt of STOP_EVENTS) {
-      overlay.addEventListener(evt, this._stop);
+      overlay.addEventListener(evt, this.stop);
     }
 
     map.getContainer().appendChild(overlay);
-    this._overlay = overlay;
+    this.overlay = overlay;
 
     const dummy = document.createElement('div');
     dummy.style.display = 'none';
     return dummy;
   }
 
-  onRemove(_map: L.Map): void {
-    if (this._overlay) {
+  onRemove(_map: LeafletMap): void {
+    if (this.overlay) {
       for (const evt of STOP_EVENTS) {
-        this._overlay.removeEventListener(evt, this._stop);
+        this.overlay.removeEventListener(evt, this.stop);
       }
-      this._overlay.remove();
-      this._overlay = null;
+      this.overlay.remove();
+      this.overlay = null;
     }
+  }
+
+  addTo(map: LeafletMap): this {
+    if (this.map) this.remove();
+    this.onAdd(map);
+    this.map = map;
+    return this;
+  }
+
+  remove(): this {
+    if (this.map) {
+      this.onRemove(this.map);
+      this.map = null;
+    }
+    return this;
   }
 }
