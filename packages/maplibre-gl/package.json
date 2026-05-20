@@ -2,7 +2,30 @@
   "name": "@maptoolkit/maplibre-gl-logo",
   "version": "0.1.0",
   "description": "Maptoolkit logo control for MapLibre GL JS.",
+  "keywords": [
+    "maptoolkit",
+    "maplibre",
+    "maplibre-gl",
+    "maplibre-gl-js",
+    "logo",
+    "attribution",
+    "control",
+    "plugin"
+  ],
+  "author": "Maptoolkit",
   "license": "MIT",
+  "homepage": "https://github.com/maptoolkit/attribution-plugins/tree/main/packages/maplibre-gl",
+  "bugs": {
+    "url": "https://github.com/maptoolkit/attribution-plugins/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maptoolkit/attribution-plugins.git",
+    "directory": "packages/maplibre-gl"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
