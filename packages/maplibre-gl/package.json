@@ -1,6 +1,6 @@
 {
   "name": "@maptoolkit/maplibre-gl-logo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Maptoolkit logo control for MapLibre GL JS.",
   "keywords": [
     "maptoolkit",
@@ -47,7 +47,7 @@
     "dev": "tsup --watch"
   },
   "peerDependencies": {
-    "maplibre-gl": ">=2.0.0 <6.0.0"
+    "maplibre-gl": ">=2.0.0 <7.0.0"
   },
   "devDependencies": {
     "maplibre-gl": "^4.7.0",
